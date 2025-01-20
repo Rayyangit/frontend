@@ -28,7 +28,7 @@ export default function Help() {
   };
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-1 space-y-2">
       <h1 className="text-2xl font-bold text-gray-700">Help & Support</h1>
 
       <div className="bg-white rounded shadow p-4 space-y-3">
@@ -40,7 +40,7 @@ export default function Help() {
           <div key={i} className="border-b last:border-0 pb-2">
             <button
               onClick={() => toggleFAQ(i)}
-              className="flex justify-between items-center w-full py-2 text-left text-gray-700 hover:text-red-500 transition"
+              className="flex justify-between items-center w-full py-2 text-left text-gray-700 hover:text-white-500 transition"
             >
               <span className="font-medium">{item.q}</span>
               <svg
@@ -68,16 +68,16 @@ export default function Help() {
               leaveFrom="max-h-40 opacity-100"
               leaveTo="max-h-0 opacity-0"
             >
-              <p className="text-sm text-gray-600 px-2 mt-1 overflow-hidden">
+              <p className="text-sm text-black-600 px-2 mt-1 overflow-hidden">
                 {item.a}
               </p>
             </Transition>
           </div>
         ))}
 
-        <p className="text-sm text-gray-600 mt-4">
+        <p className="text-sm text-black-600 mt-4">
           For direct assistance, email us at{" "}
-          <span className="text-blue-500 underline cursor-pointer">
+          <span className="text-black-500 underline cursor-pointer">
             support@zomato-style-app.com
           </span>
         </p>

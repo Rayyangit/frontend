@@ -30,7 +30,7 @@ const MenuListing = ({ menu, dropdownIdx, handleDropdown, title }) => {
 
   return (
     <div className="my-2">
-      <h1 className="heading">{title}</h1>
+      <h1 className="overview-heading ">{title}</h1>
       <div className="h-auto">
         {updatedMenu.map((option, categoryIdx) => (
           <div key={categoryIdx}>

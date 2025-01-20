@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   HiOutlineHome,
   HiOutlineTruck,
@@ -7,9 +7,13 @@ import {
   HiOutlineGift,
   HiOutlineCog,
   HiOutlineInformationCircle,
+  HiOutlineChartBar,
+  HiOutlineUserGroup,
+  HiOutlineBell,
   HiViewList,
   HiOutlineQuestionMarkCircle,
 } from "react-icons/hi";
+import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { MdOutlineDining } from "react-icons/md";
 import { dummyData } from "../data/dummy";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
@@ -23,6 +27,9 @@ import { GoShieldLock } from "react-icons/go";
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
   const [hovered, setHovered] = useState("");
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false); // State for user management dropdown
+  const [adminDropdownOpen, setAdminDropdownOpen] = useState(false); // State for admin dashboard dropdown
+  const navigate = useNavigate(); // Initialize the navigate function
 
   // Main container: dark gray background, white text, smooth width transitions
   const sidebarClasses = `
@@ -60,7 +67,29 @@ export default function Sidebar() {
   };
 
   // Nav items helper: icons + label fade
-  function navItem(to, Icon, label) {
+  function navItem(to, Icon, label, external = false) {
+    if (external) {
+      return (
+        <a
+          href={to}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-md text-gray-200 hover:bg-gray-700 transition-colors duration-200"
+        >
+          <div className="flex items-center gap-2 px-3 py-2">
+            <Icon size={20} className="flex-shrink-0" />
+            <span
+              className={`whitespace-nowrap
+                transition-all duration-300 ease-in-out
+                ${expanded ? "opacity-100 w-auto" : "opacity-0 w-0"}
+                overflow-hidden`}
+            >
+              {label}
+            </span>
+          </div>
+        </a>
+      );
+    }
     return (
       <NavLink
         to={to}
@@ -90,6 +119,15 @@ export default function Sidebar() {
       </NavLink>
     );
   }
+
+  const handleUserManagementClick = () => {
+    setUserDropdownOpen(!userDropdownOpen); // Toggle dropdown
+    navigate("/usermanagement"); // Navigate to /usermanagement page
+  };
+
+  const handleAdminDashboardClick = () => {
+    setAdminDropdownOpen(!adminDropdownOpen); // Toggle dropdown for Admin Dashboard
+  };
 
   const Tab = ({ text, to, icon }) => {
     return (
@@ -121,27 +159,107 @@ export default function Sidebar() {
         <div className="flex items-center justify-between w-full">
           <div className="font-bold text-2xl">{expanded ? "zomato" : "z"}</div>
         </div>
-        <div className={restaurantDashClasses}>
-          <div className="text-sm font-medium">Admin Dashboard</div>
+        <div
+          className="text-sm font-medium mt-1 flex items-center gap-2 px-3 py-2 cursor-pointer"
+          onClick={handleAdminDashboardClick}
+        >
+          <div
+            className={`whitespace-nowrap
+              transition-all duration-300 ease-in-out
+              ${expanded ? "opacity-100 w-auto" : "opacity-0 w-0"}
+              overflow-hidden`}
+          >
+            Admin Dashboard
+          </div>
+          {/* Dropdown Icon */}
+          <span
+            className={`transition-transform duration-300 ${
+              adminDropdownOpen ? "rotate-90" : ""
+            }`}
+          >
+            {expanded ? ">" : ""}
+          </span>
         </div>
       </div>
 
       {/* Navigation links (dark theme) */}
       <nav className="flex-1 overflow-y-auto py-4">
         <ul className="space-y-1">
-          {/* <Tab text="Dashboard" to="/" icon={HiOutlineHome} /> */}
-          <Tab text="Analytics and Insights" to="/" icon={HiOutlineHome} />
-          <Tab text="Upload" to={"/upload"} icon={FiUpload} />
+          <Tab text="Dashboard" to="/" icon={HiOutlineHome} />
+          <Tab text="Analytics" to="/analytics" icon={HiOutlineChartBar} />
+
           <Tab
-            text="Listed Restaurants"
+            text="Restaurants"
             to="/restaurants"
-            icon={IoRestaurantSharp}
+            icon={MdOutlineRestaurantMenu}
           />
-          <Tab text="Events Hub" to="/events" icon={LuPartyPopper} />
-          <Tab text="Notifications" to="/notifications" icon={HiViewList} />
+          <Tab text="Upload" to={"/upload"} icon={FiUpload} />
           <Tab text="Access Control" to="/control" icon={GoShieldLock} />
-          <Tab text="History Log" to="/log" icon={HiViewList} />
-          <Tab text="Support and Feedbacks" to="/support" icon={BiSupport} />
+
+          {/* User Management Dropdown */}
+          <li>
+            <div
+              className="block rounded-md text-gray-200 hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+              onClick={handleUserManagementClick}
+            >
+              <div className="flex items-center justify-between px-3 py-2">
+                <div className="flex items-center gap-2">
+                  <HiOutlineUserGroup size={20} className="flex-shrink-0" />
+                  <span
+                    className={`whitespace-nowrap
+                                transition-all duration-300 ease-in-out
+                                ${
+                                  expanded
+                                    ? "opacity-100 w-auto"
+                                    : "opacity-0 w-0"
+                                }
+                                overflow-hidden`}
+                  >
+                    User Management
+                  </span>
+                </div>
+                <span
+                  className={`transition-transform duration-300 ${
+                    userDropdownOpen ? "rotate-90" : ""
+                  }`}
+                >
+                  {expanded ? ">" : ""}
+                </span>
+              </div>
+            </div>
+            {userDropdownOpen && (
+              <ul className="ml-6 mt-1 space-y-1">
+                <li>
+                  {navItem(
+                    "/manage-admins",
+                    HiOutlineUserGroup,
+                    "Manage Admins"
+                  )}
+                </li>
+                <li>
+                  {navItem(
+                    "/manage-customers",
+                    HiOutlineUserGroup,
+                    "Manage Customers"
+                  )}
+                </li>
+                <li>
+                  {navItem("/manage-drivers", HiOutlineTruck, "Manage Drivers")}
+                </li>
+              </ul>
+            )}
+          </li>
+
+          <Tab text="Order Management" to="/orders" icon={HiOutlineTruck} />
+          <Tab text="Offers" to="/offers" icon={HiOutlineGift} />
+          <Tab text="Notifications" to="/notifications" icon={HiOutlineBell} />
+          <Tab text="Settings" to="/settings" icon={HiOutlineCog} />
+          <Tab text="Support" to="/support" icon={HiOutlineInformationCircle} />
+          <Tab
+            text="History Logs"
+            to="/historylogs"
+            icon={HiOutlineQuestionMarkCircle}
+          />
           <Tab text="Help" to="/help" icon={HiOutlineQuestionMarkCircle} />
         </ul>
       </nav>

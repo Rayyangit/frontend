@@ -4,7 +4,7 @@ const OfferCard = ({ offers, title }) => {
   console.log(offers);
   return (
     <div className="my-4">
-      <h1 className="heading">{title}</h1>
+      <h1 className="overview-heading ">{title}</h1>
       <div className="flex gap-4 flex-wrap">
         {offers.map((el, idx) => (
           <div

@@ -24,7 +24,7 @@ const Cuisines = ({ cuisines, title }) => {
 
   return (
     <div className="my-2">
-      <h1 className="heading">{title}</h1>
+      <h1 className="overview-heading ">{title}</h1>
       <div className="grid grid-cols-4 gap-2">
         {updatedCuisines.map((el, idx) => (
           <div

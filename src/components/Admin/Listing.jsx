@@ -17,23 +17,19 @@ const Listing = ({ categories, filter, handleSwitch }) => {
   ];
 
   const ListingSideBar = `
-  ${expanded ? "w-[40vw] min-w-[270px]" : "w-0"} 
-  h-full 
-  border-r border-gray-200 
-  p-4 pe-2 
-  sticky top-0 
-  bg-gray-50 
-  transition-all duration-300 ease-in 
-  overflow-hidden 
-  flex flex-col
-`;
+    ${expanded ? "w-[25vw] min-w-[270px]" : "w-0"}
+    h-full
+    border-r border-gray-200
+    p-4 pe-2
+    sticky top-0
+    bg-gray-50
+    overflow-hidden
+    flex flex-col
+  `;
 
   return (
     <>
-      <motion.div
-        // transition={{ duration: 1, ease: "backInOut" }}
-        className={ListingSideBar}
-      >
+      <div className={ListingSideBar}>
         <button
           onClick={() => setExpanded(!expanded)}
           className={`text-black focus:outline-none transition-all self-end duration-200  ${
@@ -80,7 +76,7 @@ const Listing = ({ categories, filter, handleSwitch }) => {
             + Add More Restaurants
           </button>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 };

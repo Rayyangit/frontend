@@ -26,8 +26,8 @@ const CommentList = ({ setViewComments, viewComments, restaurantReviews }) => {
   };
 
   return (
-    <div className="w-full">
-      <h1 className="heading flex justify-between">
+    <div className="w-full bg-white">
+      <h1 className="overview-heading  flex justify-between ps-4">
         Comments{" "}
         <div className="flex justify-end gap-1 items-center">
           <Tooltip text={"switch view"} position="bottom">
@@ -52,7 +52,7 @@ const CommentList = ({ setViewComments, viewComments, restaurantReviews }) => {
           </div>
 
           <button
-            className="rounded-2xl border-0 gap-1 text-[14px] mb-2 px-2 py-1 bg-gray-100"
+            className="rounded-md border-0 gap-1 text-[14px] mb-2 px-2 py-1 bg-gray-100"
             onClick={
               viewComments === null
                 ? () => setViewComments("user")

@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 const Features = ({ features, title }) => {
   return (
     <div className="my-2">
-      <h1 className="heading">{title}</h1>
+      <h1 className="overview-heading ">{title}</h1>
       <div className="grid sm:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-4 mx-2">
         {features.map((el, idx) => (
           <div

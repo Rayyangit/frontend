@@ -44,7 +44,7 @@ const RestaurantList = () => {
   useEffect(() => {
     const observerOptions = {
       root: null, // Viewport
-      threshold: 0.75, // 60% of the section is visible
+      threshold: 0.75, // 75% of the section is visible
     };
 
     const observerCallback = (entries) => {
@@ -198,7 +198,7 @@ const RestaurantList = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="h-[90vh] flex ">
         {/* sidebar for restaurant list */}
         <Listing
@@ -207,7 +207,7 @@ const RestaurantList = () => {
           handleSwitch={handleSwitch}
         />
         {viewComments ? (
-          <div className="flex-grow ps-8 pb-4 overflow-y-scroll overflow-x-hidden bg-white">
+          <div className="flex-grow ps-8 pb-4 overflow-y-scroll overflow-x-hidden box-border bg-white">
             <div className="flex justify-end">
               <button
                 className="bg-gray-200 p-1 px-4 rounded-md font-semibold m-1"
@@ -225,11 +225,11 @@ const RestaurantList = () => {
             />
 
             {/* tabs */}
-            <div className="flex w-full font-semibold bg-white z-10 rounded-lg sticky top-0 justify-evenly space-x-4 p-2 pt-0 box-border">
+            <div className="flex w-full font-semibold bg-white z-10 rounded-lg sticky  top-0 justify-evenly space-x-4 p-2 pt-0 box-border">
               {listedTabs.map(({ id, tab, label }) => (
                 <button
                   key={tab}
-                  className={`rounded-sm no-underline p-2 border-b-2 box-border  ${
+                  className={`rounded-sm no-underline p-2 border-b-2 box-border width-[90%] ${
                     activeTab === tab
                       ? "border-[#DC2626] text-[#DC2626]"
                       : "border-white"
@@ -241,17 +241,33 @@ const RestaurantList = () => {
               ))}
             </div>
             {/* all listed sections */}
-            <div className="w-full">
-              <section ref={sectionRefs.tab1} id="tab1" className="h-auto">
+            <div className="w-full scroll-container">
+              <section
+                ref={sectionRefs.tab1}
+                id="tab1"
+                className="h-auto w-full"
+              >
                 <OverViewSection />
               </section>
-              <section ref={sectionRefs.tab2} id="tab2" className="h-auto">
+              <section
+                ref={sectionRefs.tab2}
+                id="tab2"
+                className="h-auto w-full"
+              >
                 <FeaturesSection />
               </section>
-              <section ref={sectionRefs.tab3} id="tab3" className="h-auto">
+              <section
+                ref={sectionRefs.tab3}
+                id="tab3"
+                className="h-auto w-full"
+              >
                 <MenuSection />
               </section>
-              <section ref={sectionRefs.tab4} id="tab4" className="h-auto">
+              <section
+                ref={sectionRefs.tab4}
+                id="tab4"
+                className="h-auto w-full"
+              >
                 <CommentSection />
               </section>
             </div>

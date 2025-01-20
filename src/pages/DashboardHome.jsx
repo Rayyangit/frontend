@@ -1,4 +1,9 @@
+// ------------------------
+// src/pages/DashboardHome.jsx
+// ------------------------
+
 import React from "react";
+import TopNav from "../components/TopNav"; // Import TopNav component
 
 export default function DashboardHome() {
   // Sample data for demonstration

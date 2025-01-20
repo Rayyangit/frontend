@@ -5,7 +5,7 @@ const Popup = ({ text, hovered }) => {
     <>
       {hovered === text && (
         <span
-          className={`fixed bg-white text-black rounded-md ms-10 border  p-2 z-[999]`}
+          className={`fixed bg-white text-black rounded-md ms-6 p-2 z-[999]`}
         >
           {text}
         </span>

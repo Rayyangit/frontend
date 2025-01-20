@@ -146,13 +146,13 @@ const Hero = ({ resData, isEditable, setFormData, formData }) => {
                 </button> */}
               <div className="flex gap-x-1">
                 <button
-                  className={`${visitBtnStyle} bg-blue-300 text-blue-700`}
+                  className={`${visitBtnStyle} bg-blue-300 h-8 text-blue-700`}
                 >
                   {/* <IoArrowForward className="text-[#DC2626] text-[28px]" /> */}
                   Dashboard
                 </button>
                 <button
-                  className={`${visitBtnStyle} bg-green-300 text-green700`}
+                  className={`${visitBtnStyle} bg-green-300 h-8 text-green-700`}
                 >
                   Profile
                 </button>
@@ -182,7 +182,7 @@ const Hero = ({ resData, isEditable, setFormData, formData }) => {
             <div className="text-[12px] p-2">{formData.description}</div>
 
             <div className="w-full">
-              <div className="flex gap-2 flex-wrap lg:flex-nowrap p-4 bg-gray-100  font-semibold rounded-[12px] my-4 text-[14px] ">
+              <div className="flex gap-2 flex-wrap xl:flex-nowrap p-4 bg-gray-100  font-semibold rounded-[12px] my-4 text-[14px] ">
                 <div className="flex items-center ">
                   <HiOutlineMail className="text-[18px] me-1" />
                   <div>{formData.email}</div>
