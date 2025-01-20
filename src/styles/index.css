@@ -1,0 +1,13 @@
+/* ------------------------
+   src/styles/index.css
+   Tailwind base styles 
+   ------------------------ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can customize or add any global overrides here */
+
+.heading {
+  @apply text-xl font-bold my-2 opacity-80;
+}
