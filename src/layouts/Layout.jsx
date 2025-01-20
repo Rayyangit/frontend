@@ -19,9 +19,8 @@ const Layout = () => {
       {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Conditionally render TopNav */}
-       
-          <TopNav  />
 
+        <TopNav />
 
         {/* Outlet for nested routes */}
         <div className="p-4 overflow-y-auto">
@@ -33,7 +32,6 @@ const Layout = () => {
 };
 
 export default Layout;
-
 
 // {modalOpen && (
 //   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">

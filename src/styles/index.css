@@ -7,112 +7,114 @@
 @tailwind utilities;
 
 /* You can customize or add any global overrides here */
+
+.overview-heading {
+  @apply text-xl font-bold my-2 opacity-80;
+}
+
 .notifications {
-   font-family: Arial, sans-serif;
-   padding: 20px;
- }
- 
- table {
-   width: 100%;
-   border-collapse: collapse;
-   margin-top: 10px;
- }
- 
- th,
- td {
-   border: 1px solid #ddd;
-   padding: 10px;
-   text-align: left;
-   vertical-align: top;
- }
- 
- th {
-   background-color: #f4f4f4;
- }
- 
- ul {
-   list-style-type: none;
-   padding: 0;
- }
- 
- li {
-   margin-bottom: 10px;
- }
- 
- button {
-   padding: 5px 10px;
-   border: none;
-   background-color: #007bff;
-   color: white;
-   border-radius: 3px;
-   cursor: pointer;
-   margin-right: 10px; /* Space between buttons */
- }
- 
- button:hover {
-   background-color: #0056b3;
- }
- 
- .button-container {
-   margin-top: 10px;
-   display: flex;
-   gap: 10px; /* Space between buttons */
- }
- 
- .button-container button {
-   margin-right: 0; /* Remove right margin for the last button */
- }
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
 
- 
- table {
-   width: 100%;
-   border-collapse: collapse;
-   margin-top: 10px;
- }
- 
- th,
- td {
-   border: 1px solid #ddd;
-   padding: 10px;
-   text-align: left;
-   vertical-align: top;
- }
- 
- th {
-   background-color: #f4f4f4;
- }
- 
- ul {
-   list-style-type: none;
-   padding: 0;
- }
- 
- li {
-   margin-bottom: 10px;
- }
- 
- button {
-   padding: 5px 10px;
-   border: none;
-   background-color: #007bff;
-   color: white;
-   border-radius: 3px;
-   cursor: pointer;
- }
- 
- button:hover {
-   background-color: #0056b3;
- }
- 
-  
-      .change-log {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-      }
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
 
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 10px; /* Space between buttons */
+/* } */
+
+/* button:hover {
+  background-color: #0056b3;
+} */
+.button-container {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.button-container button {
+  margin-right: 0; /* Remove right margin for the last button */
+}
+
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+} */
+
+.change-log {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+/* 
       h1 {
         text-align: center;
       }
@@ -134,30 +136,30 @@
 
       th {
         background-color: #f4f4f4;
-      }
+      } */
 
-      .decision {
-        padding: 5px 10px;
-        border-radius: 4px;
-        color: white;
-      }
+.decision {
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: white;
+}
 
-      .decision.open {
-        background-color: orange;
-      }
+.decision.open {
+  background-color: orange;
+}
 
-      .decision.pending {
-        background-color: yellow;
-        color: black;
-      }
+.decision.pending {
+  background-color: yellow;
+  color: black;
+}
 
-      .decision.approved {
-        background-color: green;
-      }
+.decision.approved {
+  background-color: green;
+}
 
-      .decision.rejected {
-        background-color: red;
-      }
+.decision.rejected {
+  background-color: red;
+}
 /* General Styles */
 .change-log {
   padding: 6px; /* Reduced padding */
@@ -273,7 +275,7 @@ header button:hover {
 }
 
 .log-item.menu-update {
-  border-left: 4px solid #2ecc71 ; /* Reduced width */
+  border-left: 4px solid #2ecc71; /* Reduced width */
 }
 
 .log-item.restaurant-update {
@@ -396,7 +398,7 @@ header button:hover {
 }
 /* //////1233 */
 
-.outerDiv{
+.outerDiv {
   width: 300px;
   height: auto;
   max-height: 350px;
@@ -405,14 +407,14 @@ header button:hover {
   border-radius: 5px;
 }
 
-.innerDiv{
+.innerDiv {
   width: 100%;
   height: 100%;
   border-radius: 5px;
   padding: 10px;
 }
 
-.topBar{
+.topBar {
   width: 100%;
   height: 50px;
   border-bottom: var(--brd2);
@@ -421,71 +423,71 @@ header button:hover {
   justify-content: space-between;
 }
 
-.leftHead{
+.leftHead {
   display: flex;
 }
 
-.imgBox{
+.imgBox {
   width: 45px;
   height: 45px;
   border-radius: 5px;
 }
 
-.img{
+.img {
   width: 100%;
   height: 100%;
   border-radius: 5px;
 }
 
-.det{
+.det {
   margin: 0 0.5rem;
 }
 
-.name{
+.name {
   font-size: 1.1rem;
   font-weight: 500;
   text-overflow: ellipsis;
 }
 
-.address{
+.address {
   font-size: 0.9rem;
   font-weight: 400;
   color: var(--color-p5-text);
   text-overflow: ellipsis;
 }
 
-.status{
+.status {
   font-size: 0.9rem;
   color: var(--color-text);
   font-weight: 400;
 }
 
-.midBar{
+.midBar {
 }
 
-.txtBox{
+.txtBox {
   margin: 10px 0;
 }
 
-.titleTxt{
+.titleTxt {
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 2px;
-  color:var(--color-p5-text);
+  color: var(--color-p5-text);
 }
 
-.itemDet{
+.itemDet {
   display: flex;
   align-items: center;
 }
 
-.cross{
+.cross {
   margin: 0 5px;
   font-size: 0.7rem;
   font-weight: 500;
 }
 
-.vlaTxt{
+.vlaTxt {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--color-title-text);
@@ -494,27 +496,27 @@ header button:hover {
   white-space: nowrap;
 }
 
-.footerBar{
+.footerBar {
   width: 100%;
 }
 
-.viewBtn{
+.viewBtn {
   padding: 10px;
-  margin:10px;
+  margin: 10px;
   float: right;
   border: var(--brd-redish-color);
-  color:var(--color-redish1);
+  color: var(--color-redish1);
   border-radius: 5px;
   cursor: pointer;
   background-color: var(--color-white);
 }
 
-.viewBtn:hover{
+.viewBtn:hover {
   background-color: var(--bg-redish4);
 }
 
-@media all and (max-width: 420px){
-  .outerDiv{
-      width: 300px;
+@media all and (max-width: 420px) {
+  .outerDiv {
+    width: 300px;
   }
 }

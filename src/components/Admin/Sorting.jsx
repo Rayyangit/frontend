@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { MdSort } from "react-icons/md";
 import { GrSort } from "react-icons/gr";
+import { FaFilter } from "react-icons/fa";
+import Popup from "../../utils/Popup";
+import Tooltip from "../../utils/ToolTip";
 
-const Sorting = ({ list }) => {
+const Sorting = ({ label = "", list }) => {
   let [isVisible, setIsVisible] = useState(false);
 
   const handleClick = () => {
@@ -10,13 +13,18 @@ const Sorting = ({ list }) => {
   };
   return (
     <div className="flex justify-end relative ">
-      <button
-        onClick={handleClick}
-        className="rounded-2xl border-0 gap-1 text-[14px] mb-2 px-2 py-1 flex items-center justify-end bg-gray-200 "
-        title="sort"
+      <Tooltip
+        text={`${label !== "" ? "rating" : "sorting"}`}
+        position="bottom"
       >
-        <GrSort />
-      </button>
+        <button
+          onClick={handleClick}
+          className="rounded-2xl border-0 gap-1 text-[14px]  px-2 py-1 flex items-center justify-end bg-gray-200 "
+          title="sort"
+        >
+          {label === "Filters" ? <FaFilter /> : <GrSort />}
+        </button>
+      </Tooltip>
 
       <ul
         className={`m-0 absolute font-semibold overflow-hidden w-[170px] z-10 bg-gray-100 border border-gray-300 top-8 rounded-2xl shadow-lg ${

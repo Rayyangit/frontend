@@ -63,7 +63,6 @@ export default function DashboardHome() {
 
   return (
     <div className="p-4 space-y-6">
- 
       {/* Title */}
       <h1 className="text-2xl font-bold text-gray-700">Dashboard</h1>
 

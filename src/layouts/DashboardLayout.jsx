@@ -19,11 +19,11 @@ export default function DashboardLayout() {
       {/* Sidebar */}
       <Sidebar />
 
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-hidden ps-10 ">
         {/* Conditionally render TopNav */}
-         <TopNav />
+        <TopNav />
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-4">
           {/* Nested routes */}
           <Outlet />
         </main>

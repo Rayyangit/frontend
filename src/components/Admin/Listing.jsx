@@ -2,49 +2,60 @@ import React, { useState } from "react";
 import Filter from "./Filter";
 import Sorting from "./Sorting";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { AnimatePresence, motion } from "motion/react";
 
-const Listing = ({ categories, filter }) => {
+const Listing = ({ categories, filter, handleSwitch }) => {
   const [expanded, setExpanded] = useState(true);
   const list = [
-    "A-Z",
-    "Z-A",
     "Newest",
     "Oldest",
+    "Most Events",
+    "Most Campaigns",
+    "Most Changed",
     "Recently Updated",
     "Restaurants delisted ",
   ];
 
+  const ListingSideBar = `
+    ${expanded ? "w-[25vw] min-w-[270px]" : "w-0"}
+    h-full
+    border-r border-gray-200
+    p-4 pe-2
+    sticky top-0
+    bg-gray-50
+    overflow-hidden
+    flex flex-col
+  `;
+
   return (
-    <div
-      className={`${
-        expanded ? "w-[30%] min-w-[300px] p-4" : "w-0 ps-5 pt-4"
-      } border-r overflow-y-auto h-[85%] sticky top-0 bg-gray-50 border border-gray-200 transition duration-200 overflow-x-hidden flex flex-col
-      `}
-    >
-      <div
-        className={`transition self-end duration-200  ${
-          expanded ? "self-end" : "self-start absolute"
-        }`}
-      >
+    <>
+      <div className={ListingSideBar}>
         <button
           onClick={() => setExpanded(!expanded)}
-          className={`text-black focus:outline-none transition-all justify-self-end duration-200 ${
-            expanded && "justify-self-end"
+          className={`text-black focus:outline-none transition-all self-end duration-200  ${
+            expanded ? "self-end" : "self-start"
           }`}
         >
           {expanded ? <FaArrowLeft /> : <FaArrowRight />}
         </button>
-      </div>
 
-      {/* Render categories similarly to screenshot */}
-      {expanded && (
-        <>
-          <div className="flex">
+        {/* Render categories similarly to screenshot */}
+
+        <div
+          className={`h-[50vh] transition-all  duration-200 ${
+            expanded ? "block opacity-100" : "hidden opacity-0"
+          }`}
+        >
+          <div
+            className={`justify-between transition flex duration-200  ${
+              expanded ? "flex" : "hidden "
+            }`}
+          >
             <Filter filter={filter} />
             <Sorting list={list} />
           </div>
 
-          <ul className="w-full h-[50%] overflow-y-scroll">
+          <ul className="w-full h-[70%] overflow-y-scroll">
             {categories.map((cat, idx) => (
               <li
                 key={cat.name}
@@ -64,9 +75,9 @@ const Listing = ({ categories, filter }) => {
           <button className="mt-4 text-blue-500 hover:text-blue-600">
             + Add More Restaurants
           </button>
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

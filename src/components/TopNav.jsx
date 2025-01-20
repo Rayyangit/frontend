@@ -1,5 +1,11 @@
 import React, { useState, useRef } from "react";
-import { HiOutlineSearch, HiOutlineBell, HiOutlineUserCircle } from "react-icons/hi";
+
+import { outletData } from "../data/dummy"; // Update the path as necessary
+import {
+  HiOutlineSearch,
+  HiOutlineBell,
+  HiOutlineUserCircle,
+} from "react-icons/hi";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function TopNav() {
@@ -31,7 +37,8 @@ export default function TopNav() {
   }, []);
 
   // Conditionally render the TopNav based on the current route
-  const showTopNav = location.pathname !== "/login" && location.pathname !== "/signup"; // Example: don't show on /login and /signup
+  const showTopNav =
+    location.pathname !== "/login" && location.pathname !== "/signup"; // Example: don't show on /login and /signup
 
   if (!showTopNav) {
     return null; // Return nothing if you don't want to show the TopNav
