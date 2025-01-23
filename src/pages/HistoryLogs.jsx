@@ -8,7 +8,8 @@ const HistoryLogs = () => {
       ID: 1234,
       user: "234:Gourmet Paradise",
       time: "12|12|1024 12:12 am",
-      message: "added a new dish 'Truffle Pasta' to the menu nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn.",
+      message:
+        "added a new dish 'Truffle Pasta' to the menu nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn.",
       type: "menu-update",
       details: "The dish is priced at $15 and includes black truffle shavings.",
       tab: "Menu",
@@ -22,7 +23,8 @@ const HistoryLogs = () => {
       time: "12|12|1024 12:12 am",
       message: "updated restaurant timings to 10:00 AM - 11:00 PM.",
       type: "restaurant-update",
-      details: "La Fiesta extended evening hours by 1 hour to accommodate late diners.",
+      details:
+        "La Fiesta extended evening hours by 1 hour to accommodate late diners.",
       tab: "Timings",
       status: "Rejected",
       tailAction: "Awaiting approval",
@@ -34,7 +36,8 @@ const HistoryLogs = () => {
       time: "12|12|1024 12:12 am",
       message: "received a 5-star review for 'Hazelnut Cappuccino'.",
       type: "review",
-      details: "The review mentioned exceptional taste and excellent customer service.",
+      details:
+        "The review mentioned exceptional taste and excellent customer service.",
       tab: "Reviews",
       status: "Successful",
       tailAction: "Reviewed by manager",
@@ -46,7 +49,8 @@ const HistoryLogs = () => {
       time: "12|12|1024 12:12 am",
       message: "added a promotional offer: '20% off on all desserts'.",
       type: "promotion",
-      details: "The offer is valid from Jan 4th to Jan 10th and applies to dine-in orders.",
+      details:
+        "The offer is valid from Jan 4th to Jan 10th and applies to dine-in orders.",
       tab: "Promotions",
       status: "Rejected",
       tailAction: "Live on website",
@@ -104,6 +108,7 @@ const HistoryLogs = () => {
   return (
     <div className="main-content">
       <div className="content">
+<<<<<<< HEAD
       <div className="flex justify-end mt-0 pt-0">
             <div className="relative">
               <button
@@ -143,10 +148,49 @@ const HistoryLogs = () => {
                 </div>
               )}
             </div>
+=======
+        <div className="flex justify-end mt-0 pt-0">
+          <div className="relative">
+            <button
+              className="flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+              onClick={toggleFilterDropdown}
+            >
+              <FaFilter />
+            </button>
+            {filterDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow">
+                <ul>
+                  <li
+                    className="px-2 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleFilterSelection("User")}
+                  >
+                    User
+                  </li>
+                  <li
+                    className="px-2 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleFilterSelection("Type")}
+                  >
+                    Type
+                  </li>
+                  <li
+                    className="px-2 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleFilterSelection("Status")}
+                  >
+                    Status
+                  </li>
+                  <li
+                    className="px-2 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleFilterSelection("Tail Action")}
+                  >
+                    Tail Action
+                  </li>
+                </ul>
+              </div>
+            )}
+>>>>>>> 9ec650421af5fc4c8cb8e80b4680fa1b0c3280e1
           </div>
+        </div>
         <div className="overview">
-         
-
           <div className="logs-header">
             <div>User</div>
             <div>Type</div>

@@ -11,7 +11,6 @@ import Tooltip from "../../utils/ToolTip";
 const CommentList = ({ setViewComments, viewComments, restaurantReviews }) => {
   let [column, setColumn] = useState(1);
   let [reviews, setReviews] = useState(restaurantReviews);
-
   const [expandedComments, setExpandedComments] = useState({});
 
   const handleAccept = () => {};
@@ -25,9 +24,10 @@ const CommentList = ({ setViewComments, viewComments, restaurantReviews }) => {
       [id]: !prev[id],
     }));
   };
+
   return (
-    <div className="w-full">
-      <h1 className="overview-heading  flex justify-between">
+    <div className="w-full bg-white">
+      <h1 className="overview-heading  flex justify-between ps-4">
         Comments{" "}
         <div className="flex justify-end gap-1 items-center">
           <Tooltip text={"switch view"} position="bottom">
@@ -95,26 +95,6 @@ const CommentList = ({ setViewComments, viewComments, restaurantReviews }) => {
                 </div>
                 <div className="text-[11px]">2 days before</div>
               </div>
-              {column === 1 && (
-                <div>
-                  <div className="mt-2 text-sm">
-                    {expandedComments[review.id]
-                      ? review.reviewContent
-                      : `${review.reviewContent.slice(0, 120)}...`}
-                    {review.reviewContent.length > 120 && (
-                      <button
-                        onClick={() => toggleExpandComment(review.id)}
-                        className="text-blue-500 text-xs ml-2"
-                      >
-                        {expandedComments[review.id]
-                          ? "Show Less"
-                          : "Show More"}
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )}
-
               {/* action button */}
               <div className=" font-semibold flex gap-2 mt-2 flex-grow justify-end h-full">
                 <button
@@ -134,23 +114,22 @@ const CommentList = ({ setViewComments, viewComments, restaurantReviews }) => {
                 </button>
               </div>
             </div>
-            {column === 2 && (
-              <div>
-                <div className="mt-2 text-sm">
-                  {expandedComments[review.id]
-                    ? review.reviewContent
-                    : `${review.reviewContent.slice(0, 120)}...`}
-                  {review.reviewContent.length > 120 && (
-                    <button
-                      onClick={() => toggleExpandComment(review.id)}
-                      className="text-blue-500 text-xs ml-2"
-                    >
-                      {expandedComments[review.id] ? "Show Less" : "Show More"}
-                    </button>
-                  )}
-                </div>
+
+            <div>
+              <div className="mt-2 text-sm">
+                {expandedComments[review.id]
+                  ? review.reviewContent
+                  : `${review.reviewContent.slice(0, 120)}...`}
+                {review.reviewContent.length > 120 && (
+                  <button
+                    onClick={() => toggleExpandComment(review.id)}
+                    className="text-blue-500 text-xs ml-2"
+                  >
+                    {expandedComments[review.id] ? "Show Less" : "Show More"}
+                  </button>
+                )}
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>

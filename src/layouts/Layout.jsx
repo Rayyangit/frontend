@@ -20,7 +20,12 @@ const Layout = () => {
       {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Conditionally render TopNav */}
+<<<<<<< HEAD
         <TopNav title={currentPage} /> {/* Display current page title */}
+=======
+
+        <TopNav />
+>>>>>>> 9ec650421af5fc4c8cb8e80b4680fa1b0c3280e1
 
         {/* Outlet for nested routes */}
         <div className="p-4 overflow-y-auto">
@@ -33,8 +38,11 @@ const Layout = () => {
 
 export default Layout;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9ec650421af5fc4c8cb8e80b4680fa1b0c3280e1
 // {modalOpen && (
 //   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
 //     <div className="bg-white p-4 rounded shadow-md max-w-lg w-full">

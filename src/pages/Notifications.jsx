@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Notifications = () => {
   const navigate = useNavigate();
 
-
   const [notifications, setNotifications] = useState({
     restaurants: [
       {
@@ -110,37 +109,86 @@ const Notifications = () => {
       },
     ],
     moderator: [
-      { text: "Customer not happy about service.", resolved: false, restaurantId: 1, date: "2024-01-01" },
-      { text: "Suggestion to add more vegan options.", resolved: false, restaurantId: 2, date: "2024-01-05" },
-      { text: "Customer not happy about service.", resolved: false, restaurantId: 1, date: "2024-01-01" },
-      { text: "Customer not happy about service.", resolved: false, restaurantId: 1, date: "2024-01-01" },
+      {
+        text: "Customer not happy about service.",
+        resolved: false,
+        restaurantId: 1,
+        date: "2024-01-01",
+      },
+      {
+        text: "Suggestion to add more vegan options.",
+        resolved: false,
+        restaurantId: 2,
+        date: "2024-01-05",
+      },
+      {
+        text: "Customer not happy about service.",
+        resolved: false,
+        restaurantId: 1,
+        date: "2024-01-01",
+      },
+      {
+        text: "Customer not happy about service.",
+        resolved: false,
+        restaurantId: 1,
+        date: "2024-01-01",
+      },
     ],
     flags: [
-      { text: "Complaint: Delayed order delivery.", resolved: false, restaurantId: 1, date: "2024-01-02" },
-      { text: "Complaint: Incorrect order received.", resolved: true, restaurantId: 2, date: "2024-01-03" },
-      { text: "Customer not happy about service.", resolved: false, restaurantId: 1, date: "2024-01-01" },
+      {
+        text: "Complaint: Delayed order delivery.",
+        resolved: false,
+        restaurantId: 1,
+        date: "2024-01-02",
+      },
+      {
+        text: "Complaint: Incorrect order received.",
+        resolved: true,
+        restaurantId: 2,
+        date: "2024-01-03",
+      },
+      {
+        text: "Customer not happy about service.",
+        resolved: false,
+        restaurantId: 1,
+        date: "2024-01-01",
+      },
     ],
     LiveEvents: [
-      { text: "Customer reported an issue during event registration.", resolved: true, restaurantId: 1, date: "2024-01-02" },
-      { text: "New user registered for an upcoming live cooking session.", resolved: true, restaurantId: 2, date: "2024-01-05" },
+      {
+        text: "Customer reported an issue during event registration.",
+        resolved: true,
+        restaurantId: 1,
+        date: "2024-01-02",
+      },
+      {
+        text: "New user registered for an upcoming live cooking session.",
+        resolved: true,
+        restaurantId: 2,
+        date: "2024-01-05",
+      },
 
-      { text: "Customer experienced delay in receiving event updates via SMS.", resolved: true, restaurantId: 1, date: "2024-02-10" }
-    ]
-    
+      {
+        text: "Customer experienced delay in receiving event updates via SMS.",
+        resolved: true,
+        restaurantId: 1,
+        date: "2024-02-10",
+      },
+    ],
   });
   const handleRestaurantClick = (restaurant) => {
     // Navigate to /restaurants page
     navigate("/restaurants");
   };
- // Rename handleItemClick to handleMenuItemClick if it conflicts
-const handleMenuItemClick = (item, type) => {
-  const details = {
-    ...item,
-    why: type === "restaurant" ? "Customer demand" : "Seasonal updates",
-  };
+  // Rename handleItemClick to handleMenuItemClick if it conflicts
+  const handleMenuItemClick = (item, type) => {
+    const details = {
+      ...item,
+      why: type === "restaurant" ? "Customer demand" : "Seasonal updates",
+    };
 
-  // Perform additional logic if necessary
-};
+    // Perform additional logic if necessary
+  };
 
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
@@ -178,10 +226,14 @@ const handleMenuItemClick = (item, type) => {
       case "Latest":
         return [...data].sort((a, b) => b.id - a.id);
       case "Region":
-        return section === "restaurants" ? data.filter((item) => item.region === "North") : data;
+        return section === "restaurants"
+          ? data.filter((item) => item.region === "North")
+          : data;
       case "Status":
         return data.filter((item) =>
-          section === "flags" || section === "moderator" ? !item.resolved : item.hasChanges
+          section === "flags" || section === "moderator"
+            ? !item.resolved
+            : item.hasChanges
         );
       default:
         return data;
@@ -216,13 +268,16 @@ const handleMenuItemClick = (item, type) => {
   };
 
   const getRestaurantNameById = (id) =>
-    notifications.restaurants.find((restaurant) => restaurant.id === id)?.name || "Unknown";
+    notifications.restaurants.find((restaurant) => restaurant.id === id)
+      ?.name || "Unknown";
 
   const filteredModerator = getFilteredData("moderator");
   const filteredFlags = getFilteredData("flags");
 
   const filteredMenuSections = selectedRestaurant
-    ? notifications.menuSections.filter((menu) => menu.restaurantId === selectedRestaurant)
+    ? notifications.menuSections.filter(
+        (menu) => menu.restaurantId === selectedRestaurant
+      )
     : notifications.menuSections;
 
   return (
@@ -278,57 +333,67 @@ const handleMenuItemClick = (item, type) => {
       </div>
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
-        <h2 className="font-bold text-base mb-1">Restaurants</h2>
-      <ul className="space-y-1">
-        {getFilteredData("restaurants").map((restaurant, index) => (
-          <li
-            key={index}
-            className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
-            onMouseEnter={() => setHoveredItem(restaurant)}
-            onMouseLeave={() => setHoveredItem(null)}
-            onClick={() => handleRestaurantClick(restaurant)} // Handling the click event
-          >
-            <div className="flex items-center">
-              {restaurant.hasChanges && <span className="text-red-500 font-bold mr-2">●</span>}
-              <span>{restaurant.name}</span>
-            </div>
-            <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
-            {hoveredItem === restaurant && (
-              <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-2 z-10">
-                <p><strong>Changes:</strong> {restaurant.description}</p>
-                <p><strong>Region:</strong> {restaurant.region}</p>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-   
-    <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
-      <h2 className="font-bold text-base mb-1">Menu Sections</h2>
-      <ul className="space-y-1">
-        {filteredMenuSections.map((section, index) => (
-          <li
-            key={index}
-            className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
-            onMouseEnter={() => setHoveredItem(section)}
-            onMouseLeave={() => setHoveredItem(null)}
-            onClick={() => handleItemClick(section)} // Handling click to navigate
-          >
-            <div className="flex items-center">
-              {section.hasChanges && <span className="text-red-500 font-bold mr-2">●</span>}
-              <span>{section.name}</span>
-            </div>
-            <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
-            {hoveredItem === section && (
-              <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-2 z-10">
-                <p><strong>Changes:</strong> {section.changes}</p>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+          <h2 className="font-bold text-base mb-1">Restaurants</h2>
+          <ul className="space-y-1">
+            {getFilteredData("restaurants").map((restaurant, index) => (
+              <li
+                key={index}
+                className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
+                onMouseEnter={() => setHoveredItem(restaurant)}
+                onMouseLeave={() => setHoveredItem(null)}
+                onClick={() => handleRestaurantClick(restaurant)} // Handling the click event
+              >
+                <div className="flex items-center">
+                  {restaurant.hasChanges && (
+                    <span className="text-red-500 font-bold mr-2">●</span>
+                  )}
+                  <span>{restaurant.name}</span>
+                </div>
+                <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
+                {hoveredItem === restaurant && (
+                  <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-2 z-10">
+                    <p>
+                      <strong>Changes:</strong> {restaurant.description}
+                    </p>
+                    <p>
+                      <strong>Region:</strong> {restaurant.region}
+                    </p>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
+          <h2 className="font-bold text-base mb-1">Menu Sections</h2>
+          <ul className="space-y-1">
+            {filteredMenuSections.map((section, index) => (
+              <li
+                key={index}
+                className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
+                onMouseEnter={() => setHoveredItem(section)}
+                onMouseLeave={() => setHoveredItem(null)}
+                onClick={() => handleItemClick(section)} // Handling click to navigate
+              >
+                <div className="flex items-center">
+                  {section.hasChanges && (
+                    <span className="text-red-500 font-bold mr-2">●</span>
+                  )}
+                  <span>{section.name}</span>
+                </div>
+                <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
+                {hoveredItem === section && (
+                  <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-2 z-10">
+                    <p>
+                      <strong>Changes:</strong> {section.changes}
+                    </p>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
           <h2 className="font-bold text-base mb-1">Flags</h2>
           <ul className="space-y-1">
@@ -338,7 +403,10 @@ const handleMenuItemClick = (item, type) => {
                 className="p-1 rounded bg-gray-100 relative cursor-pointer"
                 onClick={() => handleItemClick(flag, "flag")}
               >
-                {flag.text} {flag.resolved && <span className="text-green-500 font-bold">✔</span>}
+                {flag.text}{" "}
+                {flag.resolved && (
+                  <span className="text-green-500 font-bold">✔</span>
+                )}
               </li>
             ))}
           </ul>
@@ -352,7 +420,10 @@ const handleMenuItemClick = (item, type) => {
                 className="p-1 rounded bg-gray-100 relative cursor-pointer"
                 onClick={() => handleItemClick(note, "moderator")}
               >
-                {note.text} {note.resolved && <span className="text-green-500 font-bold">✔</span>}
+                {note.text}{" "}
+                {note.resolved && (
+                  <span className="text-green-500 font-bold">✔</span>
+                )}
               </li>
             ))}
           </ul>
@@ -361,65 +432,76 @@ const handleMenuItemClick = (item, type) => {
       {/* Modal */}
      
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
-      <h2 className="font-bold text-base mb-1">Tiffin Services</h2>
-    <ul className="space-y-1">
-      {getFilteredData("tiffin").map((tiffin, index) => (
-        <li
-          key={index}
-          className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
-          onMouseEnter={() => setHoveredItem(tiffin)}
-          onMouseLeave={() => setHoveredItem(null)}
-          onClick={() => handleItemClick(tiffin, "tiffin")}
-        >
-          <div className="flex items-center">
-            {tiffin.hasChanges && <span className="text-red-500 font-bold mr-2">●</span>}
-            <span>{tiffin.name}</span>
-          </div>
-          <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
-          {hoveredItem === tiffin && (
-            <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-2 z-10">
-              <p><strong>Changes:</strong> {tiffin.description}</p>
-              <p><strong>Region:</strong> {tiffin.region}</p>
-            </div>
- 
-        )}
-      </li>
-    ))}
-  </ul>
-</div>
-<div className="bg-white p-1 rounded shadow-md h-[250px] relative">
-  <h2 className="font-bold text-base mb-0">Live Events</h2>
-  <ul className="space-y-1">
-    {notifications.LiveEvents.map((event, index) => (
-      <li
-        key={index}
-        className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
-        onMouseEnter={() => setHoveredItem(event)}
-        onMouseLeave={() => setHoveredItem(null)}
-        onClick={() => handleItemClick(event, "LiveEvents")}
-      >
-        <div className="flex items-center">
-          {event.resolved ? (
-            <span className="text-red-500 font-bold mr-2">●</span>
-          ) : (
-            <span className="text-red-500 font-bold mr-2">●</span>
-          )}
-          <span>{event.text}</span>
+        <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
+          <h2 className="font-bold text-base mb-1">Tiffin Services</h2>
+          <ul className="space-y-1">
+            {getFilteredData("tiffin").map((tiffin, index) => (
+              <li
+                key={index}
+                className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
+                onMouseEnter={() => setHoveredItem(tiffin)}
+                onMouseLeave={() => setHoveredItem(null)}
+                onClick={() => handleItemClick(tiffin, "tiffin")}
+              >
+                <div className="flex items-center">
+                  {tiffin.hasChanges && (
+                    <span className="text-red-500 font-bold mr-2">●</span>
+                  )}
+                  <span>{tiffin.name}</span>
+                </div>
+                <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
+                {hoveredItem === tiffin && (
+                  <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-2 z-10">
+                    <p>
+                      <strong>Changes:</strong> {tiffin.description}
+                    </p>
+                    <p>
+                      <strong>Region:</strong> {tiffin.region}
+                    </p>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
-        <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
-        {hoveredItem === event && (
-          <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-1 z-10">
-            <p><strong>Status:</strong> {event.resolved ? "Resolved" : "Unresolved"}</p>
-            <p><strong>Date:</strong> {event.date}</p>
-            <p><strong>Restaurant ID:</strong> {event.restaurantId}</p>
-          </div>
-        )}
-      </li>
-    ))}
-  </ul>
-</div>
-
+        <div className="bg-white p-1 rounded shadow-md h-[250px] relative">
+          <h2 className="font-bold text-base mb-0">Live Events</h2>
+          <ul className="space-y-1">
+            {notifications.LiveEvents.map((event, index) => (
+              <li
+                key={index}
+                className="p-1 rounded bg-gray-100 relative cursor-pointer flex items-center justify-between"
+                onMouseEnter={() => setHoveredItem(event)}
+                onMouseLeave={() => setHoveredItem(null)}
+                onClick={() => handleItemClick(event, "LiveEvents")}
+              >
+                <div className="flex items-center">
+                  {event.resolved ? (
+                    <span className="text-red-500 font-bold mr-2">●</span>
+                  ) : (
+                    <span className="text-red-500 font-bold mr-2">●</span>
+                  )}
+                  <span>{event.text}</span>
+                </div>
+                <img src="/info.png" alt="Info Icon" className="w-4 h-4" />
+                {hoveredItem === event && (
+                  <div className="absolute top-full left-0 mt-1 w-72 bg-white border rounded shadow-lg p-1 z-10">
+                    <p>
+                      <strong>Status:</strong>{" "}
+                      {event.resolved ? "Resolved" : "Unresolved"}
+                    </p>
+                    <p>
+                      <strong>Date:</strong> {event.date}
+                    </p>
+                    <p>
+                      <strong>Restaurant ID:</strong> {event.restaurantId}
+                    </p>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
           <h2 className="font-bold text-base mb-1">Moderator</h2>
@@ -430,7 +512,10 @@ const handleMenuItemClick = (item, type) => {
                 className="p-1 rounded bg-gray-100 relative cursor-pointer"
                 onClick={() => handleItemClick(flag, "flag")}
               >
-                {flag.text} {flag.resolved && <span className="text-green-500 font-bold">✔</span>}
+                {flag.text}{" "}
+                {flag.resolved && (
+                  <span className="text-green-500 font-bold">✔</span>
+                )}
               </li>
             ))}
           </ul>
@@ -444,7 +529,10 @@ const handleMenuItemClick = (item, type) => {
                 className="p-1 rounded bg-gray-100 relative cursor-pointer"
                 onClick={() => handleItemClick(note, "moderator")}
               >
-                {note.text} {note.resolved && <span className="text-green-500 font-bold">✔</span>}
+                {note.text}{" "}
+                {note.resolved && (
+                  <span className="text-green-500 font-bold">✔</span>
+                )}
               </li>
             ))}
           </ul>
@@ -454,15 +542,33 @@ const handleMenuItemClick = (item, type) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-4 rounded shadow-md max-w-lg w-full">
             <h3 className="text-lg font-bold mb-2">Details</h3>
-            <p><strong>Why:</strong> {selectedDetails.why}</p>
-            <p><strong>When:</strong> {selectedDetails.when}</p>
-            <p><strong>Who:</strong> {selectedDetails.who}</p>
-            <p><strong>Address:</strong> {selectedDetails.address}</p>
-            <p><strong>Email:</strong> {selectedDetails.email}</p>
-            <p><strong>Phone:</strong> {selectedDetails.phone}</p>
-            <p><strong>Description:</strong> {selectedDetails.description}</p>
-            <p><strong>Last Update:</strong> {selectedDetails.lastUpdate}</p>
-            <p><strong>Status:</strong> {selectedDetails.status}</p>
+            <p>
+              <strong>Why:</strong> {selectedDetails.why}
+            </p>
+            <p>
+              <strong>When:</strong> {selectedDetails.when}
+            </p>
+            <p>
+              <strong>Who:</strong> {selectedDetails.who}
+            </p>
+            <p>
+              <strong>Address:</strong> {selectedDetails.address}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedDetails.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {selectedDetails.phone}
+            </p>
+            <p>
+              <strong>Description:</strong> {selectedDetails.description}
+            </p>
+            <p>
+              <strong>Last Update:</strong> {selectedDetails.lastUpdate}
+            </p>
+            <p>
+              <strong>Status:</strong> {selectedDetails.status}
+            </p>
             <div className="mt-2 text-right">
               <button
                 onClick={() => setModalOpen(false)}

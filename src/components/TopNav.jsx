@@ -1,5 +1,16 @@
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react";
 import { HiOutlineSearch, HiOutlineBell, HiOutlineUserCircle } from "react-icons/hi";
+=======
+import React, { useState, useRef } from "react";
+
+import { outletData } from "../data/dummy"; // Update the path as necessary
+import {
+  HiOutlineSearch,
+  HiOutlineBell,
+  HiOutlineUserCircle,
+} from "react-icons/hi";
+>>>>>>> 9ec650421af5fc4c8cb8e80b4680fa1b0c3280e1
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function TopNav({ currentPage }) {
@@ -27,8 +38,14 @@ export default function TopNav({ currentPage }) {
     };
   }, []);
 
+<<<<<<< HEAD
   // Conditionally render TopNav based on the pathname
   const showTopNav = location.pathname !== "/login" && location.pathname !== "/signup";
+=======
+  // Conditionally render the TopNav based on the current route
+  const showTopNav =
+    location.pathname !== "/login" && location.pathname !== "/signup"; // Example: don't show on /login and /signup
+>>>>>>> 9ec650421af5fc4c8cb8e80b4680fa1b0c3280e1
 
   if (!showTopNav) {
     return null; // Return nothing if TopNav shouldn't be displayed

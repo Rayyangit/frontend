@@ -71,11 +71,17 @@ export default function DashboardLayout() {
       {/* Sidebar */}
       <Sidebar />
 
+<<<<<<< HEAD
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Pass currentPage to TopNav */}
         <TopNav currentPage={currentPage} />
+=======
+      <div className="flex flex-col flex-1 overflow-hidden ps-10 ">
+        {/* Conditionally render TopNav */}
+        <TopNav />
+>>>>>>> 9ec650421af5fc4c8cb8e80b4680fa1b0c3280e1
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-4">
           {/* Nested routes */}
           <Outlet />
         </main>
