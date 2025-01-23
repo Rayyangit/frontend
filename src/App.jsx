@@ -15,6 +15,13 @@ import UserManagement from "./pages/UserManagement";
 import Support from "./pages/Support";
 import ManageAdmin from "./pages/ManageAdmin";
 import OrderDetails from "./cards/OrderDetails";
+import OfferList from "./components/Admin/OfferList";
+import Offers from "./pages/Offers";
+import DineInMenu from "./pages/DineInMenu";
+import Setting from "./pages/Setting";
+import TaxesAndCharges from "./pages/TaxesAndCharges";
+import CollectionManagement from "./pages/CollectionManagement";
+import ClaimRestaurant from "./pages/ClaimRestaurant";
 
 const dummyOrders = [
   {
@@ -139,7 +146,13 @@ export default function App() {
         <Route path="/restaurants" element={<RestaurantList />} />
         <Route path="/events" element={<EventList />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/taxes" element={<TaxesAndCharges />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/dine-in-menu" element={<DineInMenu />} />
+        <Route path="/settings" element={<Setting />} />
+        <Route path="/claim-restaurant" element={<ClaimRestaurant />} />
+        <Route path="/collection-management" element={<CollectionManagement />} />
+
         
         {/* Orders route */}
         <Route path="/orders" element={<OrderManagement orders={dummyOrders} />} />
@@ -151,6 +164,7 @@ export default function App() {
         <Route path="/usermanagement" element={<UserManagement />} />
         <Route path="/manage-admins" element={<ManageAdmin />} />
         <Route path="cards/OrderDetails/:orderId" element={<OrderDetails />} />
+        <Route path="/offers" element={<Offers />} />
 
 
         {/* <Route path="/settings" element={<Settings />} /> */}

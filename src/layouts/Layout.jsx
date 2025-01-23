@@ -5,23 +5,22 @@ import TopNav from "../components/TopNav";
 
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [currentPage, setCurrentPage] = useState(""); // State to manage the current page title
   const location = useLocation(); // Get current route
-
-  // Conditionally render TopNav based on current route
-  // const showTopNav =
-  //   location.pathname !== "/orders" &&  location.pathname !== "/support"  && location.pathname !== "/notifications" && location.pathname !== "/support" && location.pathname !== "/historylogs" && location.pathname !== "/manage-admins"; // Exclude from /login and /signup
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar 
+        sidebarOpen={sidebarOpen} 
+        setSidebarOpen={setSidebarOpen} 
+        setCurrentPage={setCurrentPage} // Pass setter function to Sidebar to update currentPage
+      />
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Conditionally render TopNav */}
-       
-          <TopNav  />
-
+        <TopNav title={currentPage} /> {/* Display current page title */}
 
         {/* Outlet for nested routes */}
         <div className="p-4 overflow-y-auto">
@@ -33,6 +32,7 @@ const Layout = () => {
 };
 
 export default Layout;
+
 
 
 // {modalOpen && (

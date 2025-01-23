@@ -107,7 +107,7 @@ const HistoryLogs = () => {
       <div className="flex justify-end mt-0 pt-0">
             <div className="relative">
               <button
-                className="flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="flex items-center gap-1 px-2 py-1 bg-white text-black rounded "
                 onClick={toggleFilterDropdown}
               >
                 <FaFilter />

@@ -47,7 +47,7 @@ const UserManagement = () => {
 
   return (
     <div className="container mx-auto p-1">
-      <h1 className="text-2xl font-bold mb-1 text-center">User List</h1>
+
       <div className="flex justify-between items-center mb-1">
         <button
           onClick={() => setIsModalOpen(true)}

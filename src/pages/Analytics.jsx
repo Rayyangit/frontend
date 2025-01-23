@@ -13,7 +13,7 @@ const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the
 export default function Analytics() {
   return (
     <div>
-      <h1>Admin Analytics Dashboard</h1>
+  
       
       {/* Line Chart for Orders and Revenue */}
       <h3>Orders vs Revenue</h3>

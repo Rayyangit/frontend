@@ -26,7 +26,7 @@ const initialMessages = [
   },
 ];
 
-const Support = () => {
+const Support = ({ setCurrentPage }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [activeMessage, setActiveMessage] = useState(messages[0]);
   const [showFullMessage, setShowFullMessage] = useState(false);
@@ -99,16 +99,6 @@ const Support = () => {
           </div>
         </div>
 
-        {/* Search */}
-        {/* <div className="flex items-center p-1 border-b">
-          <input
-            type="text"
-            placeholder="Search"
-            className="flex-grow p-1 border rounded-md focus:outline-none"
-          />
-          <FaSearch className="ml-2 text-gray-500" />
-        </div> */}
-
         {/* Messages List */}
         <ul className="overflow-y-auto">
           {messages.map((message) => (
@@ -128,7 +118,7 @@ const Support = () => {
                     {message.subject}
                   </h4>
                   <p className="text-sm text-gray-500 truncate">
-                    {message.content}
+                    {message.content.substring(0, 50)}...
                   </p>
                 </div>
                 <span className="text-xs text-gray-400 ml-4">

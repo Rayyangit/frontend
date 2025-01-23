@@ -1,139 +1,233 @@
 import React, { useState } from "react";
-import { Transition } from "@headlessui/react"; // Optional if you want smoother collapses
+import { FaEdit, FaPlus } from "react-icons/fa"; // Added FaPlus
+import { MdDelete } from "react-icons/md";
 
-export default function TaxesAndCharges() {
-  const [gstRate, setGstRate] = useState(5);
-  const [serviceCharge, setServiceCharge] = useState(0);
-  const [showGSTCard, setShowGSTCard] = useState(true);
-  const [showServiceCard, setShowServiceCard] = useState(true);
+const initialTaxes = [
+  {
+    id: 1,
+    country: "Canada",
+    type: "GST",
+    rate: "5%",
+    description: "Applied across all provinces on restaurant meals",
+    status: "approved", // 'approved' or 'pending'
+  },
+  {
+    id: 2,
+    country: "Canada",
+    type: "HST",
+    rate: "13-15%",
+    description: "Combines GST and PST; varies by province",
+    status: "approved",
+  },
+  {
+    id: 3,
+    country: "Mexico",
+    type: "VAT",
+    rate: "16%",
+    description: "Standard nationwide for dine-in, takeout, and delivery",
+    status: "approved",
+  },
+  {
+    id: 4,
+    country: "United States",
+    type: "State Sales Tax",
+    rate: "2.9%-7.25%",
+    description: "Varies by state; applies to prepared foods",
+    status: "approved",
+  },
+];
 
-  const handleSave = () => {
-    alert(`GST: ${gstRate}%, Service: ₹${serviceCharge}`);
+const TaxesAndCharges = () => {
+  const [taxes, setTaxes] = useState(initialTaxes);
+  const [newTax, setNewTax] = useState({
+    country: "",
+    type: "",
+    rate: "",
+    description: "",
+  });
+  const [role, setRole] = useState("admin"); // admin or restaurant-owner
+  const [notification, setNotification] = useState("");
+
+  const handleInputChange = (e) => {
+    setNewTax({ ...newTax, [e.target.name]: e.target.value });
+  };
+
+  const handleAddTax = () => {
+    if (newTax.country && newTax.type && newTax.rate) {
+      setTaxes([
+        ...taxes,
+        { id: taxes.length + 1, ...newTax, status: "approved" },
+      ]);
+      setNewTax({ country: "", type: "", rate: "", description: "" });
+      setNotification("New tax added successfully!");
+    } else {
+      alert("Please fill in all fields.");
+    }
+  };
+
+  const handleDeleteTax = (id) => {
+    const updatedTaxes = taxes.filter((tax) => tax.id !== id);
+    setTaxes(updatedTaxes);
+    setNotification("Tax deleted successfully!");
+  };
+
+  const handleEditTax = (id) => {
+    const taxToEdit = taxes.find((tax) => tax.id === id);
+    setNewTax(taxToEdit);
+    setTaxes(taxes.filter((tax) => tax.id !== id));
+  };
+
+  const handleSubmitProposal = () => {
+    if (role === "restaurant-owner" && newTax.country && newTax.type && newTax.rate) {
+      setTaxes([
+        ...taxes,
+        { id: taxes.length + 1, ...newTax, status: "pending" },
+      ]);
+      setNewTax({ country: "", type: "", rate: "", description: "" });
+      setNotification("Tax proposal submitted for approval.");
+    } else {
+      alert("Only restaurant owners can submit proposals.");
+    }
+  };
+
+  const handleApproveProposal = (id) => {
+    const updatedTaxes = taxes.map((tax) =>
+      tax.id === id ? { ...tax, status: "approved" } : tax
+    );
+    setTaxes(updatedTaxes);
+    setNotification("Tax proposal approved.");
+  };
+
+  const handleRejectProposal = (id) => {
+    const updatedTaxes = taxes.filter((tax) => tax.id !== id);
+    setTaxes(updatedTaxes);
+    setNotification("Tax proposal rejected.");
   };
 
   return (
-    <div className="p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-700">Taxes & Charges</h1>
+    <div className="p-2 bg-gray-100 min-h-screen">
+      {/* Notification */}
+      {notification && <div className="mb-4 text-green-600">{notification}</div>}
 
-      {/* GST Rate Card */}
-      <div className="relative">
-        <div
-          onClick={() => setShowGSTCard(!showGSTCard)}
-          className="flex items-center cursor-pointer bg-gradient-to-r from-pink-500 to-red-500 p-4 rounded shadow text-white"
-        >
-          <h2 className="text-lg font-semibold flex-1">GST / Tax Rates</h2>
-          <svg
-            className={`w-5 h-5 transform transition-transform ${
-              showGSTCard ? "rotate-180" : ""
-            }`}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
+      {/* Add/Propose Tax Form */}
+      <div className="bg-white p-2 rounded-md shadow-md mb-4">
+        <h3 className="text-lg font-semibold mb-0">
+          {role === "admin" ? "Add New Tax" : "Propose Tax Change"}
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <input
+            type="text"
+            name="country"
+            placeholder="Country"
+            value={newTax.country}
+            onChange={handleInputChange}
+            className="border p-2 rounded-md"
+          />
+          <input
+            type="text"
+            name="type"
+            placeholder="Tax Type"
+            value={newTax.type}
+            onChange={handleInputChange}
+            className="border p-2 rounded-md"
+          />
+          <input
+            type="text"
+            name="rate"
+            placeholder="Rate"
+            value={newTax.rate}
+            onChange={handleInputChange}
+            className="border p-2 rounded-md"
+          />
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+            value={newTax.description}
+            onChange={handleInputChange}
+            className="border p-2 rounded-md"
+          />
+          <button
+            onClick={role === "admin" ? handleAddTax : handleSubmitProposal}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center justify-center"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
+            <FaPlus className="mr-2" />
+            {role === "admin" ? "Add Tax" : "Submit Proposal"}
+          </button>
         </div>
-
-        <Transition
-          show={showGSTCard}
-          enter="transition-all duration-300"
-          enterFrom="max-h-0 opacity-0"
-          enterTo="max-h-40 opacity-100"
-          leave="transition-all duration-300"
-          leaveFrom="max-h-40 opacity-100"
-          leaveTo="max-h-0 opacity-0"
-        >
-          <div className="bg-white rounded shadow p-4 mt-1 overflow-hidden">
-            <p className="text-sm text-gray-500 mb-4">
-              Configure the GST or other applicable taxes for your menu items.
-            </p>
-            <div className="flex gap-4 items-end">
-              <div>
-                <label className="block text-sm text-gray-600 mb-1">
-                  GST Rate (%)
-                </label>
-                <input
-                  type="number"
-                  className="border px-2 py-1 rounded w-20 focus:border-red-500 focus:outline-none transition"
-                  value={gstRate}
-                  onChange={(e) => setGstRate(Number(e.target.value))}
-                />
-              </div>
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </Transition>
       </div>
 
-      {/* Service Charges Card */}
-      <div className="relative">
-        <div
-          onClick={() => setShowServiceCard(!showServiceCard)}
-          className="flex items-center cursor-pointer bg-gradient-to-r from-blue-500 to-green-500 p-4 rounded shadow text-white"
-        >
-          <h2 className="text-lg font-semibold flex-1">Service Charges</h2>
-          <svg
-            className={`w-5 h-5 transform transition-transform ${
-              showServiceCard ? "rotate-180" : ""
-            }`}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
+      {/* Tax List Table */}
+      <div className="bg-white p-4 rounded-md shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Tax Rates</h3>
+        <table className="w-full border-collapse border border-gray-300">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="border border-gray-300 p-2 text-center">Country</th>
+              <th className="border border-gray-300 p-2 text-center">Tax Type</th>
+              <th className="border border-gray-300 p-2 text-center">Rate</th>
+              <th className="border border-gray-300 p-2 text-center">Description</th>
+              <th className="border border-gray-300 p-2 text-center">Status</th>
+              <th className="border border-gray-300 p-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {taxes.map((tax) => (
+              <tr key={tax.id} className="text-center">
+                <td className="border border-gray-300 p-2">{tax.country}</td>
+                <td className="border border-gray-300 p-2">{tax.type}</td>
+                <td className="border border-gray-300 p-2">{tax.rate}</td>
+                <td className="border border-gray-300 p-2">{tax.description}</td>
+                <td className="border border-gray-300 p-2">{tax.status}</td>
+                <td className="border border-gray-300 p-2 flex justify-center gap-2">
+                  {role === "admin" && tax.status === "pending" && (
+                    <>
+                      <button
+                        onClick={() => handleApproveProposal(tax.id)}
+                        className="bg-green-500 text-white p-2 rounded-md"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleRejectProposal(tax.id)}
+                        className="bg-red-500 text-white p-2 rounded-md"
+                      >
+                        Reject
+                      </button>
+                    </>
+                  )}
+                  {role === "admin" && (
+                    <>
+                    <button
+  onClick={() => handleEditTax(tax.id)}
+  className="bg-white text-black p-2 rounded-full focus:outline-none"
+>
+  <FaEdit className="text-black w-4 h-4" />
+</button>
+<button
+  onClick={() => handleDeleteTax(tax.id)}
+  className="bg-white text-black p-2 rounded-full focus:outline-none"
+>
+  <MdDelete className="text-black w-4 h-4" /> 
+</button>
 
-        <Transition
-          show={showServiceCard}
-          enter="transition-all duration-300"
-          enterFrom="max-h-0 opacity-0"
-          enterTo="max-h-40 opacity-100"
-          leave="transition-all duration-300"
-          leaveFrom="max-h-40 opacity-100"
-          leaveTo="max-h-0 opacity-0"
-        >
-          <div className="bg-white rounded shadow p-4 mt-1 overflow-hidden">
-            <p className="text-sm text-gray-500 mb-4">
-              Additional charges like service fee, packaging fee, etc.
-            </p>
-            <div className="flex gap-4 items-end">
-              <div>
-                <label className="block text-sm text-gray-600 mb-1">
-                  Service Charge (₹)
-                </label>
-                <input
-                  type="number"
-                  className="border px-2 py-1 rounded w-28 focus:border-red-500 focus:outline-none transition"
-                  value={serviceCharge}
-                  onChange={(e) => setServiceCharge(Number(e.target.value))}
-                />
-              </div>
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </Transition>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+            {taxes.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center py-4">
+                  No taxes available. Add new taxes or submit proposals.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
-}
+};
+
+export default TaxesAndCharges;

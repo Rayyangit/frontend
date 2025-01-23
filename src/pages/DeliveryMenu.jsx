@@ -33,7 +33,7 @@ export default function DeliveryMenu() {
       {/* Top area: Title + search bar + toggle tabs */}
       <div className="flex items-center justify-between border-b p-4">
         {/* Left: "Delivery Menu" title */}
-        <h1 className="text-2xl font-bold text-gray-800">Delivery Menu</h1>
+       
 
         {/* Center: Search bar */}
         <div className="relative w-1/2 max-w-md">

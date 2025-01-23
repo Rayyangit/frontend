@@ -1,135 +1,123 @@
+// src/pages/Offers.jsx
 import React, { useState } from "react";
-import { Transition } from "@headlessui/react";
+import { motion } from "framer-motion";
 
-export default function Offers() {
-  const [offers, setOffers] = useState([
-    { code: "WELCOME50", desc: "50% off on first order", active: true },
-    { code: "FREEDRINK", desc: "1 free beverage", active: false },
-  ]);
-  const [selectedOffer, setSelectedOffer] = useState(null);
-  const [code, setCode] = useState("");
-  const [desc, setDesc] = useState("");
+import dummy from "../data/dummy";
+import { initialOffers } from "../data/offersData";
+import { filterCategoriesByOffers } from "../utils/filterMenu";
 
-  const addOffer = () => {
-    if (!code.trim() || !desc.trim()) return;
-    setOffers([...offers, { code, desc, active: true }]);
-    setCode("");
-    setDesc("");
+import CreateOfferForm from "../components/Offers/CreateOfferForm";
+import OffersList from "../components/Offers/OffersList";
+import CategoryDisplay from "../components/Offers/CategoryDisplay";
+
+function Offers() {
+  const { deliveryCategories, dineInCategories } = dummy;
+  const [offers, setOffers] = useState(initialOffers);
+
+  // Flatten items to build itemMap (for item-level offers)
+  const allDeliveryItems = deliveryCategories.flatMap((cat) =>
+    cat.subcategories.flatMap((sub) => sub.items)
+  );
+  const allDineInItems = dineInCategories.flatMap((cat) =>
+    cat.subcategories.flatMap((sub) => sub.items)
+  );
+  const allItems = [...allDeliveryItems, ...allDineInItems];
+
+  // itemMap: { itemId -> itemName }
+  const itemMap = {};
+  allItems.forEach((itm) => {
+    itemMap[itm.id] = itm.name;
+  });
+
+  // Unique categories/subCategories for the form
+  const uniqueCategories = [
+    ...new Set([...deliveryCategories, ...dineInCategories].map((c) => c.name)),
+  ];
+  const uniqueSubCategories = [
+    ...new Set(
+      [...deliveryCategories, ...dineInCategories].flatMap((cat) =>
+        cat.subcategories.map((sub) => sub.name)
+      )
+    ),
+  ];
+
+  // Handlers
+  const handleAddOffer = (newOffer) => {
+    setOffers((prev) => [...prev, newOffer]);
+  };
+  const handleRemoveOffer = (offerId) => {
+    setOffers((prev) => prev.filter((off) => off.id !== offerId));
+  };
+  const handleEditOffer = (offerId, updatedFields) => {
+    setOffers((prev) =>
+      prev.map((off) =>
+        off.id === offerId ? { ...off, ...updatedFields } : off
+      )
+    );
   };
 
+  // Filter categories to show only items that have an offer
+  const impactedDelivery = filterCategoriesByOffers(deliveryCategories, offers);
+  const impactedDineIn = filterCategoriesByOffers(dineInCategories, offers);
+
   return (
-    <div className="p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-700">Offers</h1>
+    <motion.div
+      className="min-h-screen bg-gray-100"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className="p-6 max-w-6xl mx-auto">
+        <motion.h1
+          className="text-3xl font-bold text-gray-800 mb-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          Manage Offers
+        </motion.h1>
 
-      <div className="bg-white rounded shadow p-4">
-        <h2 className="text-lg font-semibold text-gray-700 mb-2">
-          Current Offers
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left border">
-            <thead className="bg-gray-50 border-b">
-              <tr className="text-gray-500">
-                <th className="py-2 px-2">Code</th>
-                <th className="py-2 px-2">Description</th>
-                <th className="py-2 px-2">Active</th>
-                <th className="py-2 px-2">Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {offers.map((offer, i) => (
-                <React.Fragment key={i}>
-                  <tr className="border-b last:border-0 hover:bg-gray-100 transition">
-                    <td className="py-2 px-2">{offer.code}</td>
-                    <td className="py-2 px-2">{offer.desc}</td>
-                    <td className="py-2 px-2">
-                      {offer.active ? (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold text-white bg-green-500 rounded-full animate-pulse">
-                          Active
-                        </span>
-                      ) : (
-                        <span className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 bg-gray-200 rounded-full">
-                          Inactive
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-2 px-2">
-                      <button
-                        onClick={() =>
-                          setSelectedOffer(selectedOffer === i ? null : i)
-                        }
-                        className="text-blue-500 hover:underline"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* Expandable row for more info */}
-                  <Transition
-                    show={selectedOffer === i}
-                    enter="transition-all duration-300"
-                    enterFrom="max-h-0 opacity-0"
-                    enterTo="max-h-20 opacity-100"
-                    leave="transition-all duration-300"
-                    leaveFrom="max-h-20 opacity-100"
-                    leaveTo="max-h-0 opacity-0"
-                  >
-                    <tr className="border-b last:border-0">
-                      <td
-                        colSpan={4}
-                        className="py-2 px-2 bg-gray-50 text-sm text-gray-600"
-                      >
-                        <p>
-                          Here you can show extra details about the offer: usage
-                          limits, valid dates, or terms &amp; conditions.
-                        </p>
-                      </td>
-                    </tr>
-                  </Transition>
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="bg-white rounded shadow p-4">
-        <h2 className="text-lg font-semibold text-gray-700 mb-2">
-          Add New Offer
-        </h2>
-        <div className="flex flex-col gap-2 md:flex-row">
-          <div className="md:flex-1">
-            <label className="block text-sm text-gray-600 mb-1">
-              Offer Code
-            </label>
-            <input
-              type="text"
-              className="border rounded w-full px-2 py-1 focus:border-red-500 transition"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+        {/**
+         * 'md:items-stretch' ensures on medium screens or larger,
+         * each column matches the tallest one's height.
+         */}
+        <div className="flex flex-col md:flex-row gap-8 md:items-stretch">
+          {/* Left Column: Create Offer Form */}
+          <div className="flex-1 bg-white shadow-sm rounded p-4">
+            <CreateOfferForm
+              onSave={handleAddOffer}
+              categories={uniqueCategories}
+              subCategories={uniqueSubCategories}
+              items={allItems}
             />
           </div>
-          <div className="md:flex-1">
-            <label className="block text-sm text-gray-600 mb-1">
-              Offer Description
-            </label>
-            <input
-              type="text"
-              className="border rounded w-full px-2 py-1 focus:border-red-500 transition"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+
+          {/* Right Column: Offers List */}
+          <div className="flex-1 bg-white shadow-sm rounded p-4">
+            <OffersList
+              offers={offers}
+              onRemoveOffer={handleRemoveOffer}
+              onEditOffer={handleEditOffer}
+              itemMap={itemMap}
             />
           </div>
-          <div className="flex items-end">
-            <button
-              onClick={addOffer}
-              className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition"
-            >
-              Add
-            </button>
-          </div>
         </div>
+
+        {/* Items with Offers (Delivery) */}
+        <CategoryDisplay
+          data={impactedDelivery}
+          offers={offers}
+          title="Delivery"
+        />
+        {/* Items with Offers (Dine-In) */}
+        <CategoryDisplay
+          data={impactedDineIn}
+          offers={offers}
+          title="Dine-In"
+        />
       </div>
-    </div>
+    </motion.div>
   );
 }
+
+export default Offers;

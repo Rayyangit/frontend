@@ -230,7 +230,7 @@ const handleMenuItemClick = (item, type) => {
       <div className="flex justify-end mt-0 pt-0">
         <div className="relative">
           <button
-            className="flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="flex items-center gap-1 px-2 py-1 bg-white text-black rounded "
             onClick={toggleFilterDropdown}
           >
             <FaFilter />
@@ -359,55 +359,7 @@ const handleMenuItemClick = (item, type) => {
         </div>
       </div>
       {/* Modal */}
-      <div className="flex justify-end mt-0 pt-0">
-        <div className="relative">
-          <button
-            className="flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={toggleFilterDropdown}
-          >
-            <FaFilter />
-          </button>
-          {filterDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow">
-              <ul className="py-1">
-                {"Latest Priority Region Status".split(" ").map((filter) => (
-                  <li
-                    key={filter}
-                    className="px-3 py-1 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleFilterChange(filter)}
-                  >
-                    {filter}
-                  </li>
-                ))}
-                <li className="px-3 py-1 hover:bg-gray-100 cursor-pointer">
-                  <div>
-                    <label>Start Date:</label>
-                    <input
-                      type="date"
-                      name="startDate"
-                      value={startDate}
-                      onChange={handleDateChange}
-                      className="p-1 border rounded"
-                    />
-                  </div>
-                </li>
-                <li className="px-3 py-1 hover:bg-gray-100 cursor-pointer">
-                  <div>
-                    <label>End Date:</label>
-                    <input
-                      type="date"
-                      name="endDate"
-                      value={endDate}
-                      onChange={handleDateChange}
-                      className="p-1 border rounded"
-                    />
-                  </div>
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-      </div>
+     
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <div className="bg-white p-2 rounded shadow-md h-[250px] relative">
       <h2 className="font-bold text-base mb-1">Tiffin Services</h2>
